@@ -15,18 +15,17 @@ import {
 import food, { tabs, ORANGE, popularFood } from './food';
 
 const width = Dimensions.get('window').width;
-const CELL_WIDTH = width * 0.64;
-const CELL_HEIGHT = CELL_WIDTH * 1.4;
-
-const SPACING = 12;
+export const CELL_WIDTH = width * 0.64;
+export const CELL_HEIGHT = CELL_WIDTH * 1.4;
+export const SPACING = 12;
 const FULL_SIZE = CELL_WIDTH + SPACING * 2
 
-export default function FoodList() {
+export default function FoodList({navigation}) {
 	const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
 	return (
-		<ScrollView>
-			<SafeAreaView style={{ flex: 1 }}>
+		<ScrollView style={{paddingTop: 35}}>
+			<View style={{ flex: 1 }}>
 				<FlatList
 					data={tabs}
 					keyExtractor={(item, index) => `${item}-${index}`}
@@ -60,7 +59,10 @@ export default function FoodList() {
                     decelerationRate='fast'
 					renderItem={({ item }) => {
 						return (
-							<TouchableOpacity onPress={() => {}} style={{ width: CELL_WIDTH, height: CELL_HEIGHT, margin: SPACING }}>
+							<TouchableOpacity onPress={() => {
+                                navigation.navigate('FoodListDetails', {item})
+                            }} 
+                            style={{ width: CELL_WIDTH, height: CELL_HEIGHT, margin: SPACING }}>
 								<View style={{ flex: 1, padding: SPACING, justifyContent: 'center' }}>
 									<View
 										style={[
@@ -114,7 +116,7 @@ export default function FoodList() {
 						);
 					}}
 				/>
-			</SafeAreaView>
+			</View>
 		</ScrollView>
 	);
 }
