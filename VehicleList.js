@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import {
-	Dimensions,
-	FlatList,
-	SafeAreaView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-	Image,
-	ScrollView,
-} from 'react-native';
-import {SharedElement} from 'react-native-shared-element';
+import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, SafeAreaView } from 'react-native';
+import { SharedElement } from 'react-navigation-shared-element';
 
-import food, { tabs, ORANGE, popularFood } from './food';
+import vehicle, { tabs, ORANGE, popularVehicle } from './vehicle';
 
 const width = Dimensions.get('window').width;
 export const CELL_WIDTH = width * 0.64;
@@ -21,12 +11,11 @@ export const CELL_HEIGHT = CELL_WIDTH * 1.4;
 export const SPACING = 12;
 const FULL_SIZE = CELL_WIDTH + SPACING * 2;
 
-export default function FoodList({ navigation }) {
-	const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
+export default function VehicleList({ navigation }) {
+	const [selectedTab, setSelectedTab] = useState(tabs[0]);
 	return (
-		<ScrollView style={{ paddingTop: 35 }}>
-			<View style={{ flex: 1 }}>
+		<ScrollView style={{ paddingTop: 35 }} >
 				<FlatList
 					data={tabs}
 					keyExtractor={(item, index) => `${item}-${index}`}
@@ -52,7 +41,7 @@ export default function FoodList({ navigation }) {
 					}}
 				/>
 				<FlatList
-					data={food}
+					data={vehicle}
 					keyExtractor={item => item.key}
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -62,7 +51,7 @@ export default function FoodList({ navigation }) {
 						return (
 							<TouchableOpacity
 								onPress={() => {
-									navigation.push('FoodListDetails', { item });
+									navigation.push('VehicleListDetails', { item });
 								}}
 								style={{ width: CELL_WIDTH, height: CELL_HEIGHT, margin: SPACING }}
 							>
@@ -94,7 +83,8 @@ export default function FoodList({ navigation }) {
 					}}
 				/>
 				<FlatList
-					data={popularFood}
+					style={{ paddingBottom: 50 }}
+					data={popularVehicle}
 					keyExtractor={item => item.key}
 					showsVerticalScrollIndicator={false}
 					scrollEnabled={false}
@@ -125,7 +115,7 @@ export default function FoodList({ navigation }) {
 						);
 					}}
 				/>
-			</View>
+                
 		</ScrollView>
 	);
 }
