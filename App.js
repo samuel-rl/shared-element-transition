@@ -1,19 +1,38 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { enableScreens } from 'react-native-screens';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
 import FoodList from './FoodList';
 import FoodListDetails from './FoodListDetails';
+enableScreens();
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator headerMode="none">
+			<Stack.Navigator initialRouteName="FoodList" headerMode="none">
 				<Stack.Screen name="FoodList" component={FoodList} />
-                <Stack.Screen name="FoodListDetails" component={FoodListDetails} />
+				<Stack.Screen
+					sharedElementsConfig={(route, otherRoute, showing) => {
+						const { item } = route.params;
+
+						return [
+							{
+								id: `item.${item.key}.image`,
+							},
+							{
+								id: `item.${item.key}.bg`,
+							},
+							{
+								id: `item.${item.key}.meta`,
+							},
+						];
+					}}
+					name="FoodListDetails"
+					component={FoodListDetails}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

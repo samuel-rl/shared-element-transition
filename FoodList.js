@@ -11,6 +11,7 @@ import {
 	Image,
 	ScrollView,
 } from 'react-native';
+import {SharedElement} from 'react-native-shared-element';
 
 import food, { tabs, ORANGE, popularFood } from './food';
 
@@ -18,13 +19,13 @@ const width = Dimensions.get('window').width;
 export const CELL_WIDTH = width * 0.64;
 export const CELL_HEIGHT = CELL_WIDTH * 1.4;
 export const SPACING = 12;
-const FULL_SIZE = CELL_WIDTH + SPACING * 2
+const FULL_SIZE = CELL_WIDTH + SPACING * 2;
 
-export default function FoodList({navigation}) {
+export default function FoodList({ navigation }) {
 	const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
 	return (
-		<ScrollView style={{paddingTop: 35}}>
+		<ScrollView style={{ paddingTop: 35 }}>
 			<View style={{ flex: 1 }}>
 				<FlatList
 					data={tabs}
@@ -53,32 +54,40 @@ export default function FoodList({navigation}) {
 				<FlatList
 					data={food}
 					keyExtractor={item => item.key}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    snapToInterval={FULL_SIZE}
-                    decelerationRate='fast'
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					snapToInterval={FULL_SIZE}
+					decelerationRate="fast"
 					renderItem={({ item }) => {
 						return (
-							<TouchableOpacity onPress={() => {
-                                navigation.navigate('FoodListDetails', {item})
-                            }} 
-                            style={{ width: CELL_WIDTH, height: CELL_HEIGHT, margin: SPACING }}>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.push('FoodListDetails', { item });
+								}}
+								style={{ width: CELL_WIDTH, height: CELL_HEIGHT, margin: SPACING }}
+							>
 								<View style={{ flex: 1, padding: SPACING, justifyContent: 'center' }}>
-									<View
-										style={[
-											StyleSheet.absoluteFillObject,
-											{ backgroundColor: item.color, borderRadius: 16 },
-										]}
-									/>
-									<View style={{position: "absolute", top: SPACING, left: SPACING}}>
-										<Text style={styles.type}>
-											{item.type}
-										</Text>
-										<Text style={styles.subType}>
-											{item.subType}
-										</Text>
-									</View>
-                                    <Image source={{ uri: item.image }} style={styles.image} />
+									<SharedElement id={`item.${item.key}.bg`} style={[StyleSheet.absoluteFillObject]}>
+										<View
+											style={[
+												StyleSheet.absoluteFillObject,
+												{ backgroundColor: item.color, borderRadius: 16 },
+											]}
+										/>
+									</SharedElement>
+									<SharedElement id={`item.${item.key}.meta`} style={[StyleSheet.absoluteFillObject]}>
+										<View style={{ position: 'absolute', top: SPACING, left: SPACING }}>
+											<Text style={styles.type}>
+												{item.type}
+											</Text>
+											<Text style={styles.subType}>
+												{item.subType}
+											</Text>
+										</View>
+									</SharedElement>
+									<SharedElement id={`item.${item.key}.image`} style={styles.image}>
+										<Image source={{ uri: item.image }} style={styles.image} />
+									</SharedElement>
 								</View>
 							</TouchableOpacity>
 						);

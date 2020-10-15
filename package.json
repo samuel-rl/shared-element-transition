@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "^5.7.6",
-    "@react-navigation/stack": "^5.9.3",
+    "@react-navigation/native": "^5.0.9",
+    "@react-navigation/stack": "^5.1.1",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
     "faker": "^5.1.0",
@@ -23,7 +23,9 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
-    "react-native-web": "~0.13.12"
+    "react-native-shared-element": "^0.7.0",
+    "react-native-web": "~0.13.12",
+    "react-navigation-shared-element": "^5.0.0-alpha1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
